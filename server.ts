@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
 
-dotenv.config();
+dotenv.config({ path: './server/.env' });
 
 const app = express();
 const PORT = 3000;

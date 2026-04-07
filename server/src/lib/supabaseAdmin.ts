@@ -1,9 +1,18 @@
-import { createClient } from '@supabase/supabase-js';
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
+import path from 'path'
 
-dotenv.config();
+// Load env relative to project root
+dotenv.config({ path: path.resolve(process.cwd(), 'server/.env') })
 
-const supabaseUrl = process.env.VITE_SUPABASE_URL || '';
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
+import { createClient } from '@supabase/supabase-js'
 
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+const supabaseUrl = process.env.SUPABASE_URL
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+console.log('SUPABASE_URL:', supabaseUrl) // ← add this to debug
+
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY')
+}
+
+export const supabaseAdmin = createClient(supabaseUrl, supabaseKey)
